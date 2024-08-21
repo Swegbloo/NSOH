@@ -68,3 +68,4 @@ for i = 1:n3
 end
 
 A = get_inf_coef(R_vec,n_vec,s,R_abs);
+B = get_B(R_vec,n_vec,s,R_abs);

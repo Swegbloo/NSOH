@@ -3,7 +3,7 @@ function A_j_i = get_inf_coef(r, n, area, r_mod)
     % with respect to each reference point i.
     % Inputs:
     %   r:      n x n x 3 matrix (jth point, ith reference, [x, y, z] components)
-    %   n:      n x n x 3 matrix (normal vector components [x, y, z])
+    %   n:      n x 3 matrix (normal vector components [x, y, z])
     %   area:   n-element vector containing areas of n panels
     %   r_mod:  n x n matrix containing the mod values of r vectors
     % Outputs:
@@ -24,7 +24,7 @@ function A_j_i = get_inf_coef(r, n, area, r_mod)
                 n_i = squeeze(n(j,i,:));    % [n_x, n_y, n_z]
                 
                 % Calculate the dot product of r_j_i and n_i
-                dotProduct = dot(r_j_i, n_i);
+                dotProduct = dot(r_j_i(j,i,:), n_i);
                 
                 % Calculate the coefficient A_j_i
                 A_j_i(j,i) = (dotProduct / r_mod(j,i)^3) * area(i);
