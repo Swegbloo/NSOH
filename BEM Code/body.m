@@ -66,5 +66,5 @@ for i = 1:n3
         R_vec(j,i,3) = CG(j,3)-CG(i,3);
     end
 end
-%create n vector
-%for i = %for B
+
+A = get_inf_coef(R_vec,n_vec,s,R_abs);
