@@ -22,11 +22,11 @@ function A_j_i = get_inf_coef(r, n, area, r_mod)
                 % Extract r_j_i vector (r(j,i,:)) and n_i vector (n(j,i,:))
                 r_j_i = squeeze(r(j,i,:));  % [r_x, r_y, r_z]
                 disp(r_j_i);
-                n_i = squeeze(n(i,:));    % [n_x, n_y, n_z]
+                n_i = squeeze(n(j,i,:));    % [n_x, n_y, n_z]
                 disp(n_i);
                 %n_i = transpose(n_i);
                 % Calculate the dot product of r_j_i and n_i
-                dotProduct = r_j_i(1)*n_i(1)+r_j_i(2)*n_i(2)+r_j_i(3)*n_i(3);
+                dotProduct = r_j_i(1)*n_i(1)+r_j_i(2)*n_i(2)+r_j_i(j,i,3)*n_i(3);
                 
                 % Calculate the coefficient A_j_i
                 A_j_i(j,i) = (dotProduct / r_mod(j,i)^3) * area(i);
