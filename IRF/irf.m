@@ -1,11 +1,29 @@
-% MATLAB code to calculate damping coefficients B(τ)
 clc;
 clear;
 
 % Load the input matrix from a CSV file or other source
+inputMatrix = load('data.csv'); 
+
+%% Part 1: MATLAB code to calculate the infinte added mass A(inf)
+% axx = Axx, when frequency is infinite (for the highest frequency) 
+A_33 = inputMatrix(46,6); 
+A_35 = inputMatrix(46,7);
+A_53 = inputMatrix(46,8);
+A_55 = inputMatrix(46,9);
+
+% Display the results
+fprintf('Infinite Added Mass Coefficients:\n');
+fprintf('A_33 = %.4f\n', A_33);
+fprintf('A_35 = %.4f\n', A_35);
+fprintf('A_53 = %.4f\n', A_53);
+fprintf('A_55 = %.4f\n', A_55);
+
+
+%% Part 2: MATLAB code to calculate damping coefficients B(τ)
+
 % Example: Assume 'data.csv' contains the matrix with columns:
 % Frequency | b_33 | b_35 | b_53 | b_55
-inputMatrix = load('data.csv'); 
+
 
 % Extract columns from the input matrix
 frequency = inputMatrix(:, 1); % First column: frequency (ω)
