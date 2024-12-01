@@ -18,7 +18,8 @@ fprintf('A_35 = %.4f\n', A_35);
 fprintf('A_53 = %.4f\n', A_53);
 fprintf('A_55 = %.4f\n', A_55);
 
-%% Load the input matrix from a CSV file or other source
+%% Part 2: Solve for damping term
+% Load the input matrix from a CSV file or other source
 % Example: Assume 'data.csv' contains the matrix with columns:
 % Frequency | b_33 | b_35 | b_53 | b_55
 inputMatrix = load('data.csv'); 
@@ -142,7 +143,6 @@ for i = 2:298
         xr(i) = xr(i-1) + vr(i-1)*dt;
 end
 hold on;
-xlim([0 100]);
 plot(tau_values,x);
 plot(tau_values,xr);
 hold off;
