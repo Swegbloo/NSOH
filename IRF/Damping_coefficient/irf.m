@@ -3,7 +3,7 @@ clc;
 clear;
 % Load the input matrix from a CSV file or other source
 inputMatrix = load('data_am.csv'); 
-
+forceMatrix = load('F_and_M.csv');
 %% Part 1: MATLAB code to calculate the infinte added mass A(inf)
 % axx = Axx, when frequency is infinite (for the highest frequency) 
 A_33 = inputMatrix(46,6); 
@@ -98,7 +98,14 @@ a = zeros(num_tau,1);
 x(1,1) = 0;
 v(1,1) = 0;
 a(1,1) = 0;
+xr(1,1) = 0;
+vr(1,1) = 0;
+ar(1,1) = 0;
 
+dt = 0.3867;
+F3 = forceMatrix(:,2);
+F5 = forceMatrix(:,3);
 for i = 1:299
-
+    M = [M_33+A_33 I+A_35; M_33+A_53 I+A_55];
+    F = [;];
 end
