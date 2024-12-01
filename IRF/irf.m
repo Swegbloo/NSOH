@@ -2,7 +2,7 @@ clc;
 clear;
 
 % Load the input matrix from a CSV file or other source
-inputMatrix = load('data.csv'); 
+inputMatrix = load('data_am.csv'); 
 
 %% Part 1: MATLAB code to calculate the infinte added mass A(inf)
 % axx = Axx, when frequency is infinite (for the highest frequency) 
@@ -17,7 +17,6 @@ fprintf('A_33 = %.4f\n', A_33);
 fprintf('A_35 = %.4f\n', A_35);
 fprintf('A_53 = %.4f\n', A_53);
 fprintf('A_55 = %.4f\n', A_55);
-
 
 %% Part 2: MATLAB code to calculate damping coefficients B(τ)
 
