@@ -3,7 +3,7 @@ clc;
 clear;
 % Load the input matrix from a CSV file or other source
 inputMatrix = load('data_am.csv'); 
-
+forceMatrix = load('F_and_M.csv');
 %% Part 1: MATLAB code to calculate the infinte added mass A(inf)
 % axx = Axx, when frequency is infinite (for the highest frequency) 
 A_33 = inputMatrix(46,6); 
@@ -90,21 +90,56 @@ for t = 1:num_tau
     fprintf('τ = %.2f: B_33 = %.4f, B_35 = %.4f, B_53 = %.4f, B_55 = %.4f\n', ...
         tau_values(t), B_33(t), B_35(t), B_53(t), B_55(t));
 end
+%% Part 3: solving for the motion
 
+%initialize
 x = zeros(num_tau,1);
 v = zeros(num_tau,1);
 a = zeros(num_tau,1);
-
+xr = zeros(num_tau,1);
+vr = zeros(num_tau,1);
+ar = zeros(num_tau,1);
 x(1,1) = 0;
 v(1,1) = 0;
 a(1,1) = 0;
 xr(1,1) = 0;
 vr(1,1) = 0;
 ar(1,1) = 0;
-
+damp_33 = 0;
+damp_35 = 0;
+damp_53 = 0;
+damp_55 = 0;
 dt = 0.3867;
-F3 
-for i = 1:299
-    M = [M_33+A_33 I+A_35; M_33+A_53 I+A_55];
-    F = [;];
+F3 = forceMatrix(:,2);
+F5 = forceMatrix(:,3);
+M_33 = 22843.0 *1000;
+Ky = 42.8;
+I = M_33*Ky^2;
+C_33 = 30448 *1000;
+C_35 = -102927.337 *1000;
+C_53 = -102927.337 *1000;
+C_55 = 44366332 *1000;
+%time marching algorithm
+for i = 1:298
+    for j = 2:297
+        if i>=j
+            damp_33 = damp_33 + B_33(j)*v(i-j,1)*dt;
+            damp_35 = damp_35 + B_35(j)*vr(i-j,1)*dt;
+            damp_53 = damp_53 + B_53(j)*v(i-j,1)*dt;
+            damp_55 = damp_55 + B_55(j)*vr(i-j,1)*dt;
+        else
+            break;
+        end
+    end
+        M = [M_33+A_33 I+A_35;M_33+A_53 I+A_55];
+        F = [F3(i)-C33*x(i)-damp_33-C35*xr(i)-damp_35;F5(i)-C55*xr(i)-damp_55-C53*x(i)-damp_53];
+        X = M\F;
+        a(i) = X(1,1);
+        ar(i) = X(2,1);
+        v(i+1) = v(i) + a(i)*tau_values(i);
+        vr(i+1) = vr(i) + ar(i)*tau_values(i);
+        x(i+1) = x(i) + v(i)*tau_values(i);
+        xr(i+1) = xr(i) + vr(i)*tau_values(i);
 end
+plot(tau_values,x);
+plot(tau_values,xr);
